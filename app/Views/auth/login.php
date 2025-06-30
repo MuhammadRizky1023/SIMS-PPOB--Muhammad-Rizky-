@@ -3,49 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($title ?? 'Login') ?> - HIS PPOB</title>
-    <!-- Bootstrap CSS -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Login - SIMS PPOB</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+        }
+        .form-section{
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .image-section{
+            flex: 1;
+            background-color: #ffecec;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (min-width: 768px) {
+        .image-section {
+            display: flex;
+      }
+    }
+    </style>
 </head>
 <body>
-    
-<div class="row g-0 min-vh-100">
-    <!-- Form Kiri -->
-    <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
-        <div class="mb-4">
-            <img src="/Website Assets/Logo.png" alt="Logo" style="width: 150px;">
+    <div class="form-section">
+    <div class="w-100" style="max-width: 400px;">
+      <img src="<?= base_url('assets/Logo.png') ?>" class="mb-4" alt="SIMS PPOB" style="width: 150px;">
+      <h2 class="mb-4 fw-bold">Selamat datang kembali</h2>
+      <p class="text-muted mb-4">Silakan login untuk melanjutkan</p>
+
+      <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+      <?php endif; ?>
+      <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+      <?php endif; ?>
+
+      <form method="post" action="/login">
+        <!-- Email -->
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+          <input type="email" class="form-control" name="email" placeholder="email" required>
         </div>
-        <h3 class="mb-4">Masuk atau buat akun untuk memulai</h3>
 
-        <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
-        <?php endif; ?>
+        <!-- Password -->
+        <div class="input-group mb-4">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input type="password" class="form-control" name="password" placeholder="password" required>
+        </div>
 
-        <form method="post" action="/login">
-            <div class="mb-3">
-                <input type="email" name="email" class="form-control" placeholder="Masukkan email anda" required>
-            </div>
-            <div class="mb-3">
-                <input type="password" name="password" class="form-control" placeholder="Masukkan password anda" required>
-            </div>
-            <div class="d-grid">
-                <button type="submit" class="btn btn-danger">Masuk</button>
-            </div>
-        </form>
+        <!-- Button -->
+        <button type="submit" class="btn btn-danger w-100">Login</button>
 
-        <p class="text-center mt-3">
-            Belum punya akun? <a href="/register" class="text-danger">Registrasi di sini</a>
-        </p>
+        <p class="mt-3 text-center">belum punya akun? <a href="/register" class="text-danger fw-bold">daftar di sini</a></p>
+      </form>
     </div>
+  </div>
 
-    <!-- Gambar Kanan -->
-    <div class="col-lg-6 d-none d-lg-block bg-light">
-        <img src="/Website Assets/Illustrasi Login.png" alt="Ilustrasi Login" class="img-fluid vh-100" style="object-fit: cover;">
-    </div>
-</div>
-<!-- Bootstrap JS (optional) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+  <!-- Right: Illustration -->
+  <div class="image-section">
+  <img src="<?= base_url('assets/Illustrasi Login.png') ?>" alt="Ilustrasi" class="img-fluid" style="max-width: 400px;">
+  </div>
 </body>
 </html>
-

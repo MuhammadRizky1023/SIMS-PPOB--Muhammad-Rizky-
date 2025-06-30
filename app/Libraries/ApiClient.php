@@ -9,8 +9,15 @@ class ApiClient
     public function __construct()
     {
         $this->client = \Config\Services::curlrequest([
-            'baseURI'    => 'https://take-home-test-api.nutech-integrasi.com/',
+            'baseURI'    => 'https://take-home-test-api.nutech-integrasi.com',
             'httpErrors' => false,
+        ]);
+    }
+
+    public function get($endpoint, $headers = [])
+    {
+        return $this->client->get($endpoint, [
+            'headers' => $headers,
         ]);
     }
 
@@ -22,18 +29,19 @@ class ApiClient
         ]);
     }
 
-    public function get($endpoint, $headers = [])
-    {
-        return $this->client->get($endpoint, [
-            'headers' => $headers,
-        ]);
-    }
-
     public function put($endpoint, $data, $headers = [])
     {
         return $this->client->request('PUT', $endpoint, [
             'form_params' => $data,
             'headers'     => $headers,
+        ]);
+    }
+
+    public function putMultipart($endpoint, $multipart, $headers = [])
+    {
+        return $this->client->request('PUT', $endpoint, [
+            'multipart' => $multipart,
+            'headers'   => $headers,
         ]);
     }
 }

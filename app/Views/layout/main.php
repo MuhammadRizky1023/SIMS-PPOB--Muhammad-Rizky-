@@ -1,25 +1,25 @@
-!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIS PPOB - <?= esc($title ?? ''); ?></title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= $title ?? 'SIMS PPOB' ?></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Style tambahan opsional */
+  </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <?= view('components/navbar') ?>
 
-    <div class="container mt-4">
-        <!-- Konten Halaman -->
-        <?= $this->renderSection('content') ?>
-    </div>
+  <!-- ✅ Include Navbar -->
+  <?= view('partials/navbar') ?>
 
-    <!-- Footer -->
-    <?= view('components/footer') ?>
+  <!-- ✅ Konten Halaman -->
+  <main>
+    <?= $this->renderSection('content') ?>
+  </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- ✅ JS Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

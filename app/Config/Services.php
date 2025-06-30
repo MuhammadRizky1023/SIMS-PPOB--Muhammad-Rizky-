@@ -29,4 +29,14 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+     public static function apiClient($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('apiClient');
+        }
+
+        return new \App\Libraries\ApiClient();
+    }
+
 }

@@ -1,44 +1,35 @@
-<?= $this->extend('layouts/main') ?>
-
+<?= $this->extend('layout/main') ?>
 <?= $this->section('content') ?>
-<div class="container py-5" style="max-width: 800px;">
 
-<div class="container py-5">
-  <!-- Profile Section -->
-   <?= view('components/profile', ['profile' => $profile]) ?>
-  <!-- Saldo Card -->
-  <?= view('components/balance', ['balance' => $balance]) ?>
+<div class="container mt-4">
+  <div class="row">
+     <!-- Komponen Info Pengguna & Saldo -->
+    <?= view_cell(\App\Cells\PortoCell::class) ?>
+    <!-- 💸 Pembayaran -->
+    <div class="col-md-8">
+      <h5 class="fw-bold mb-3">Pembayaran <span class="text-danger"><?= esc($service['service_name']) ?></span></h5>
 
-    <!-- Service Info -->
-    <div class="text-center mb-4">
-        <h5>Pembayaran</h5>
-        <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
-            <img src="<?= esc($service['service_icon']) ?>" alt="Service Icon" style="width: 30px; height: 30px;">
-            <h4 class="fw-bold mb-0"><?= esc($service['service_name']) ?></h4>
-        </div>
-    </div>
+      <!-- Flash Message -->
+      <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+      <?php endif; ?>
+      <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+      <?php endif; ?>
 
-    <!-- Payment Form -->
-    <form action="<?= site_url('/transaction/pay') ?>" method="POST" class="text-center">
-        <?= csrf_field() ?>
+      <form method="get" action="/pay">
         <input type="hidden" name="service_code" value="<?= esc($service['service_code']) ?>">
+        <input type="hidden" name="submit" value="1">
 
-        <div class="mb-4">
-            <input type="text" class="form-control form-control-lg text-center" value="Rp <?= number_format($service['service_tariff'], 0, ',', '.') ?>" readonly>
+        <div class="form-group mb-3">
+          <label class="form-label">Nominal Tagihan</label>
+          <input type="text" class="form-control" value="Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?>" readonly>
         </div>
 
-        <div class="d-grid">
-            <button type="submit" class="btn btn-danger btn-lg">Bayar</button>
-        </div>
-    </form>
-
+        <button type="submit" class="btn btn-danger w-100">Bayar Sekarang</button>
+      </form>
+    </div>
+  </div>
 </div>
-<!-- Include notification views -->
-<?= $this->include('notification/pay_notification'); ?>
 
-<?php if (session()->getFlashdata('pay_success')) : ?>
-    <?= $this->include('notification/pay_success'); ?>
-<?php elseif (session()->getFlashdata('pay_failed')) : ?>
-    <?= $this->include('notification/pay_failed'); ?>
-<?php endif; ?>
 <?= $this->endSection() ?>

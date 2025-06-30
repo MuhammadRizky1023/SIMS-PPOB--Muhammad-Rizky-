@@ -5,33 +5,30 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+// Default landing page
+$routes->setDefaultController('HomeController');
+$routes->setDefaultMethod('index');
+$routes->get('/', 'HomeController::index');
+$routes->post('/toggle-saldo', 'HomeController::toggleSaldo');
+// Auth
+$routes->get('/login', 'AuthController::login');
+$routes->post('/login', 'AuthController::login');
+$routes->get('/register', 'AuthController::register');
+$routes->post('/register', 'AuthController::register');
+$routes->get('/logout', 'AuthController::logout');
+// Profile
+$routes->get('/profile', 'ProfileController::index');
+$routes->post('/profile/update', 'ProfileController::update');
+$routes->post('/profile/image', 'ProfileController::updateImage');
+// Transaction
+$routes->get('/balance', 'TransactionController::balance');
+$routes->get('/topup', 'TransactionController::topup');
+$routes->post('/topup', 'TransactionController::topup');
+$routes->get('/pay', 'TransactionController::pay');
+$routes->post('/pay', 'TransactionController::pay');
+$routes->get('/transaction/history', 'TransactionController::history');
 
-// Default route
-$routes->get('/', 'Auth::login');
-
-// Auth Routes
-$routes->get('/login', 'Auth::login');
-$routes->post('/login', 'Auth::login');
-$routes->get('/register', 'Auth::register');
-$routes->post('/register', 'Auth::register');
-$routes->get('/logout', 'Auth::logout');
-
-// Dashboard Route
-$routes->get('/dashboard', 'Dashboard::index');
-
-// Profile Routes
-$routes->get('/profile', 'Profile::index');
-$routes->post('/profile/update', 'Profile::update');
-$routes->post('/profile/upload-image', 'Profile::updateImage');
-
-// Transaction Routes
-$routes->get('/transaction/topup', 'Transaction::topup');
-$routes->post('/transaction/topup', 'Transaction::topup');
-
-$routes->post('/transaction/pay', 'Transaction::payTransaction');
-
-$routes->get('/transaction/history', 'Transaction::history');
-// OPSIONAL: 404 Override (jika URL tidak ditemukan)
-$routes->set404Override(function() {
+// 404
+$routes->set404Override(function () {
     return view('errors/html/error_404');
 });
